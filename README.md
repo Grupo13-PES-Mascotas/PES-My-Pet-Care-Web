@@ -1,2 +1,2 @@
 # PES_My-Pet-Care-Web
-The My Pet Care web version
+Software project from FIB (Facultat d'Informàtica de Barcelona)
