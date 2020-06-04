@@ -2,16 +2,6 @@ mat-toolbar-row {
   background: #0070C0
 }
 
-mat-drawer {
-  width: 200px;
-  height: 200px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding-top: 1px;
-  padding-left: 20px;
-}
-
 mat-sidenav-container {
   height: 500px;
 }
@@ -26,5 +16,9 @@ mat-sidenav {
 }
 
 mat-selection-list {
+  color: white;
+}
+
+.navText {
   color: white;
 }
