@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
+import {User} from "../interfaces/user";
 
 @Component({
   selector: 'app-root',
@@ -8,7 +9,7 @@ import {Router} from '@angular/router';
 })
 export class AppComponent implements OnInit {
   title = 'My Pet Care';
-  text: string;
+  user: User;
   isLogin: boolean = false;
   selectedNavigation: number = 0;
   navigationOptions = [
