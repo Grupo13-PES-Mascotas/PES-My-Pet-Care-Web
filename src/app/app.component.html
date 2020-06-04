@@ -4,8 +4,18 @@
   </mat-toolbar-row>
 </mat-toolbar>
 
-<mat-grid-list cols="8">
-  <mat-grid-tile [colspan]="1">
-    Hello
-  </mat-grid-tile>
-</mat-grid-list>
+<div>
+  <mat-sidenav-container>
+    <mat-sidenav mode="side" opened [fixedInViewport]="false" [fixedTopGap]="0" [fixedBottomGap]="0">
+      <mat-selection-list [multiple]="false">
+        <mat-list-option *ngFor="let nav of navigationOptions">
+          <span>{{ nav }}</span>
+        </mat-list-option>
+      </mat-selection-list>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+      <h1>Main content</h1>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>
