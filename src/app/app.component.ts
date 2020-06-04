@@ -26,7 +26,7 @@ export class AppComponent implements OnInit {
     Validators.required
   ]);
 
-   constructor(private router: Router, public authService: AuthService) {
+   constructor(private router: Router, public authService: AuthService, private formBuilder: FormBuilder) {
   }
 
   doGoogleLogin(){
