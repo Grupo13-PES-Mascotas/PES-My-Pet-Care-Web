@@ -24,7 +24,12 @@
 
   <mat-sidenav-content>
     <ng-template [ngIf]="isLogin" [ngIfElse]="navigation">
-      Login
+      <div class="formGroup">
+        <button type="button" class="btn googleBtn" (click)="doGoogleLogin()">
+          <i class="fab fa-google-plus-g"></i>
+          Log in with Google
+        </button>
+      </div>
     </ng-template>
     <ng-template #navigation [ngSwitch]="selectedNavigation">
       <div *ngSwitchCase="0">

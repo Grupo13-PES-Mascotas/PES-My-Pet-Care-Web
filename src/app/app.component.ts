@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {User} from "../interfaces/user";
 import {FormBuilder, FormControl, Validators} from "@angular/forms";
+import {AuthService} from "./auth.service";
 
 @Component({
   selector: 'app-root',
@@ -25,7 +26,12 @@ export class AppComponent implements OnInit {
     Validators.required
   ]);
 
-  constructor(private router: Router, private formBuilder: FormBuilder) {
+   constructor(private router: Router, public authService: AuthService) {
+  }
+
+  doGoogleLogin(){
+    this.user = this.authService.doGoogleLogin();
+    this.isLogin = false;
   }
 
   ngOnInit(): void {
