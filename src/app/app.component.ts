@@ -61,6 +61,7 @@ export class AppComponent implements OnInit {
       name: '',
       gender: '',
       breed: '',
+      birth: '',
       pathologies: ''
     });
 
@@ -81,5 +82,9 @@ export class AppComponent implements OnInit {
 
   selectCustomNavigationOption(actual: number): void {
     this.selectedCustomOptionNavigation = actual + 1;
+  }
+
+  createPet(petData) {
+    console.log(petData);
   }
 }
