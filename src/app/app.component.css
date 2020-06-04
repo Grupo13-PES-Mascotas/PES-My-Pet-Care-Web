@@ -19,6 +19,10 @@ mat-selection-list {
   color: white;
 }
 
+.side {
+  background: #0389c7;
+}
+
 .navText {
   color: white;
 }

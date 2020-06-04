@@ -4,19 +4,28 @@
   </mat-toolbar-row>
 </mat-toolbar>
 
-<div>
-  <mat-sidenav-container>
-    <mat-sidenav mode="side" opened [fixedInViewport]="false" [fixedTopGap]="0" [fixedBottomGap]="0">
-      <mat-selection-list [multiple]="false">
-        <mat-list-option *ngFor="let nav of navigationOptions; let actual = index"
-                         (click)="selectNavigationOption(actual)">
-          <span class="navText">{{ nav }}</span>
-        </mat-list-option>
-      </mat-selection-list>
-    </mat-sidenav>
+<mat-sidenav-container>
+  <mat-sidenav class="side" mode="side" opened [fixedInViewport]="false" [fixedTopGap]="0" [fixedBottomGap]="0">
+    <mat-selection-list class="side" [multiple]="false">
+      <mat-list-option *ngFor="let nav of navigationOptions; let actual = index"
+                       (click)="selectNavigationOption(actual)">
+        <span class="navText">{{ nav }}</span>
+      </mat-list-option>
+    </mat-selection-list>
+  </mat-sidenav>
 
-    <mat-sidenav-content>
-      <router-outlet></router-outlet>
-    </mat-sidenav-content>
-  </mat-sidenav-container>
-</div>
+  <mat-sidenav-content>
+    <ng-template [ngIf]="isLogin" [ngIfElse]="navigation">
+      Login
+    </ng-template>
+    <ng-template #navigation [ngSwitch]="selectedNavigation">
+      <div *ngSwitchCase="0">
+        My Pets
+      </div>
+      <div *ngSwitchDefault>
+        Not implemented yet
+      </div>
+    </ng-template>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
