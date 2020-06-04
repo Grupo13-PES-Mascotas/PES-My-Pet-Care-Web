@@ -12,6 +12,7 @@ export class AppComponent implements OnInit {
   user: User;
   isLogin: boolean = false;
   selectedNavigation: number = 0;
+  selectedCustomOptionNavigation: number = 0;
   navigationOptions = [
     'My Pets', 'Pet\'s Community', 'My Walks', 'Near Establishments', 'Calendar', 'Achievements', 'Settings'
   ];
@@ -22,22 +23,26 @@ export class AppComponent implements OnInit {
   constructor(private router: Router) {
   }
 
-  selectNavigationOption(actual: number) {
-    this.selectedNavigation = actual;
-  }
-
   ngOnInit(): void {
     this.user = {
       uid: '1234', username: 'Raimon', email: 'raimon@gmail.com',
       pets: [
-        {owner: 'Raimon', name: 'Lucas', gender: 'Male', breed: 'Leche',
-          birth: '2020-06-01T00:00:00', pathologies: 'none'},
-        {owner: 'Raimon', name: 'Lucas', gender: 'Male', breed: 'Leche',
-          birth: '2020-06-01T00:00:00', pathologies: 'none'},
-        {owner: 'Raimon', name: 'Lucas', gender: 'Male', breed: 'Leche',
-          birth: '2020-06-01T00:00:00', pathologies: 'none'},
-        {owner: 'Raimon', name: 'Lucas', gender: 'Male', breed: 'Leche',
-          birth: '2020-06-01T00:00:00', pathologies: 'none'}
+        {
+          owner: 'Raimon', name: 'Lucas', gender: 'Male', breed: 'Leche',
+          birth: '2020-06-01T00:00:00', pathologies: 'none'
+        },
+        {
+          owner: 'Raimon', name: 'Lucas', gender: 'Male', breed: 'Leche',
+          birth: '2020-06-01T00:00:00', pathologies: 'none'
+        },
+        {
+          owner: 'Raimon', name: 'Lucas', gender: 'Male', breed: 'Leche',
+          birth: '2020-06-01T00:00:00', pathologies: 'none'
+        },
+        {
+          owner: 'Raimon', name: 'Lucas', gender: 'Male', breed: 'Leche',
+          birth: '2020-06-01T00:00:00', pathologies: 'none'
+        }
       ]
     };
   }
@@ -50,7 +55,12 @@ export class AppComponent implements OnInit {
     return dateParts[2] + '-' + dateParts[1] + '-' + dateParts[0];
   }
 
-  selectCustomNavigationOption(actual: number) {
+  selectNavigationOption(actual: number): void {
+    this.selectedNavigation = actual;
+    this.selectedCustomOptionNavigation = 0;
+  }
 
+  selectCustomNavigationOption(actual: number): void {
+    this.selectedCustomOptionNavigation = actual + 1;
   }
 }
