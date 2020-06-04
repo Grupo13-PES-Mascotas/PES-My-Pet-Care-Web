@@ -1,52 +1,48 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
-import {User} from '../interfaces/user';
-import { AngularFireAuth } from '@angular/fire/auth';
-import * as firebase from 'firebase/app';
-import {AuthService} from './auth.service';
+import {User} from "../interfaces/user";
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-
 export class AppComponent implements OnInit {
   title = 'My Pet Care';
   user: User;
-  isLogin: boolean = true;
+  isLogin: boolean = false;
   selectedNavigation: number = 0;
+  selectedCustomOptionNavigation: number = 0;
   navigationOptions = [
     'My Pets', 'Pet\'s Community', 'My Walks', 'Near Establishments', 'Calendar', 'Achievements', 'Settings'
   ];
   navigationCustomOptions = [
     ['Register new pet'], [], [], [], [], [], []
-  ];
+  ]
 
-  constructor(private router: Router, public authService: AuthService) {
-  }
-
-  selectNavigationOption(actual: number) {
-    this.selectedNavigation = actual;
-  }
-
-  doGoogleLogin(){
-    this.user = this.authService.doGoogleLogin();
-    this.isLogin = false;
+  constructor(private router: Router) {
   }
 
   ngOnInit(): void {
     this.user = {
       uid: '1234', username: 'Raimon', email: 'raimon@gmail.com',
       pets: [
-        {owner: 'Raimon', name: 'Lucas', gender: 'Male', breed: 'Leche',
-          birth: '2020-06-01T00:00:00', pathologies: 'none'},
-        {owner: 'Raimon', name: 'Lucas', gender: 'Male', breed: 'Leche',
-          birth: '2020-06-01T00:00:00', pathologies: 'none'},
-        {owner: 'Raimon', name: 'Lucas', gender: 'Male', breed: 'Leche',
-          birth: '2020-06-01T00:00:00', pathologies: 'none'},
-        {owner: 'Raimon', name: 'Lucas', gender: 'Male', breed: 'Leche',
-          birth: '2020-06-01T00:00:00', pathologies: 'none'}
+        {
+          owner: 'Raimon', name: 'Lucas', gender: 'Male', breed: 'Leche',
+          birth: '2020-06-01T00:00:00', pathologies: 'none'
+        },
+        {
+          owner: 'Raimon', name: 'Lucas', gender: 'Male', breed: 'Leche',
+          birth: '2020-06-01T00:00:00', pathologies: 'none'
+        },
+        {
+          owner: 'Raimon', name: 'Lucas', gender: 'Male', breed: 'Leche',
+          birth: '2020-06-01T00:00:00', pathologies: 'none'
+        },
+        {
+          owner: 'Raimon', name: 'Lucas', gender: 'Male', breed: 'Leche',
+          birth: '2020-06-01T00:00:00', pathologies: 'none'
+        }
       ]
     };
   }
@@ -59,7 +55,12 @@ export class AppComponent implements OnInit {
     return dateParts[2] + '-' + dateParts[1] + '-' + dateParts[0];
   }
 
-  selectCustomNavigationOption(actual: number) {
+  selectNavigationOption(actual: number): void {
+    this.selectedNavigation = actual;
+    this.selectedCustomOptionNavigation = 0;
+  }
 
+  selectCustomNavigationOption(actual: number): void {
+    this.selectedCustomOptionNavigation = actual + 1;
   }
 }

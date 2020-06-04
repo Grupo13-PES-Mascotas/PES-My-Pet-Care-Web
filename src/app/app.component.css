@@ -29,7 +29,7 @@ mat-selection-list {
 
 .pet-card {
   padding-top: 50px;
-  min-width: 300px;
+  min-width: 75%;
 }
 
 .pet-field {
