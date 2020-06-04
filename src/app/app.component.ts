@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {User} from "../interfaces/user";
+import {FormBuilder, FormControl, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-root',
@@ -13,14 +14,18 @@ export class AppComponent implements OnInit {
   isLogin: boolean = false;
   selectedNavigation: number = 0;
   selectedCustomOptionNavigation: number = 0;
+  registerPetForm;
   navigationOptions = [
     'My Pets', 'Pet\'s Community', 'My Walks', 'Near Establishments', 'Calendar', 'Achievements', 'Settings'
   ];
   navigationCustomOptions = [
     ['Register new pet'], [], [], [], [], [], []
   ]
+  registerPetControl = new FormControl('', [
+    Validators.required
+  ]);
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private formBuilder: FormBuilder) {
   }
 
   ngOnInit(): void {
@@ -45,6 +50,14 @@ export class AppComponent implements OnInit {
         }
       ]
     };
+
+    this.registerPetForm = this.formBuilder.group({
+      name: '',
+      gender: '',
+      breed: '',
+      pathologies: ''
+    });
+
   }
 
   getDate(dateTime: string): string {

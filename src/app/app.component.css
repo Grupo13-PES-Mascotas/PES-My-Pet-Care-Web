@@ -44,3 +44,12 @@ mat-selection-list {
   background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
   background-size: cover;
 }
+
+
+.example-full-width {
+  min-width: 200px;
+}
+
+td {
+  padding-right: 8px;
+}
