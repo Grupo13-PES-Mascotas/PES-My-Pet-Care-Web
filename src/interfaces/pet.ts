@@ -5,6 +5,6 @@ export interface Pet {
   breed: string;
   birth: string;
   pathologies: string;
-  needs: string;
-  recommendedKcal: number;
+  needs?: string;
+  recommendedKcal?: number;
 }

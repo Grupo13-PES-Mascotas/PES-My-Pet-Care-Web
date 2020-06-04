@@ -11,6 +11,14 @@
                        (click)="selectNavigationOption(actual)">
         <span class="navText">{{ nav }}</span>
       </mat-list-option>
+      <ng-template [ngIf]="!isLogin && navigationCustomOptions[selectedNavigation].length > 0">
+        <mat-divider class="divisor"></mat-divider>
+        <div mat-subheader class="navText">Options</div>
+        <mat-list-option *ngFor="let customOption of navigationCustomOptions[selectedNavigation]; let actual = index"
+                         (click)="selectCustomNavigationOption(actual)">
+          <span class="navText">{{ customOption }}</span>
+        </mat-list-option>
+      </ng-template>
     </mat-selection-list>
   </mat-sidenav>
 
@@ -21,8 +29,19 @@
     <ng-template #navigation [ngSwitch]="selectedNavigation">
       <div *ngSwitchCase="0">
         <mat-grid-list cols="3" rowHeight="3:1">
-          <mat-grid-tile *ngFor="let pet of user.pets">
-
+          <mat-grid-tile *ngFor="let pet of user.pets" [colspan]="1" [rowspan]="2">
+            <mat-card class="pet-card">
+              <mat-card-header>
+                <div mat-card-avatar class="example-header-image"></div>
+                <mat-card-title>{{ pet.name }}</mat-card-title>
+                <mat-card-subtitle>{{ pet.breed }}</mat-card-subtitle>
+              </mat-card-header>
+              <mat-card-content>
+                <p><span class="pet-field">Gender:</span> {{ pet.gender }}</p>
+                <p><span class="pet-field">Birth date:</span> {{ getDate(pet.birth) }}</p>
+                <p><span class="pet-field">Pathologies:</span> {{ pet.pathologies }}</p>
+              </mat-card-content>
+            </mat-card>
           </mat-grid-tile>
         </mat-grid-list>
 

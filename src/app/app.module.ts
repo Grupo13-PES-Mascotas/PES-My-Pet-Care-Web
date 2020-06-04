@@ -9,6 +9,7 @@ import {LogInComponent} from './log-in/log-in.component';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatListModule} from '@angular/material/list';
 import {AppRoutingModule} from './app-routing.module';
+import {MatCardModule} from "@angular/material/card";
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import {AppRoutingModule} from './app-routing.module';
     MatGridListModule,
     MatSidenavModule,
     MatListModule,
-    AppRoutingModule
+    AppRoutingModule,
+    MatCardModule
   ],
   providers: [],
   bootstrap: [AppComponent]

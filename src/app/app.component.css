@@ -8,7 +8,7 @@ mat-sidenav-container {
 
 mat-sidenav {
   width: 200px;
-  height: 500px;
+  height: 1000px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -25,4 +25,22 @@ mat-selection-list {
 
 .navText {
   color: white;
+}
+
+.pet-card {
+  padding-top: 50px;
+  min-width: 300px;
+}
+
+.pet-field {
+  color: #0070C0;
+}
+
+.divisor {
+  stroke: white;
+}
+
+.example-header-image {
+  background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+  background-size: cover;
 }
