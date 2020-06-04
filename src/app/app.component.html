@@ -8,14 +8,15 @@
   <mat-sidenav-container>
     <mat-sidenav mode="side" opened [fixedInViewport]="false" [fixedTopGap]="0" [fixedBottomGap]="0">
       <mat-selection-list [multiple]="false">
-        <mat-list-option *ngFor="let nav of navigationOptions">
+        <mat-list-option *ngFor="let nav of navigationOptions; let actual = index"
+                         (click)="selectNavigationOption(actual)">
           <span class="navText">{{ nav }}</span>
         </mat-list-option>
       </mat-selection-list>
     </mat-sidenav>
 
     <mat-sidenav-content>
-      <h1>Main content</h1>
+      <h1>{{ text }}</h1>
     </mat-sidenav-content>
   </mat-sidenav-container>
 </div>

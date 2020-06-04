@@ -7,7 +7,12 @@ import {Component} from '@angular/core';
 })
 export class AppComponent {
   title = 'My Pet Care';
+  text: string;
   navigationOptions = [
     'My Pets', 'Pet\'s Community', 'My Walks', 'Near Establishments', 'Calendar', 'Achievements', 'Settings'
   ];
+
+  selectNavigationOption(actual: number) {
+    this.text = this.navigationOptions[actual];
+  }
 }
