@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {User} from "../interfaces/user";
+import {AuthService} from "./auth.service";
 
 @Component({
   selector: 'app-root',
@@ -10,7 +11,7 @@ import {User} from "../interfaces/user";
 export class AppComponent implements OnInit {
   title = 'My Pet Care';
   user: User;
-  isLogin: boolean = false;
+  isLogin: boolean = true;
   selectedNavigation: number = 0;
   selectedCustomOptionNavigation: number = 0;
   navigationOptions = [
@@ -20,7 +21,12 @@ export class AppComponent implements OnInit {
     ['Register new pet'], [], [], [], [], [], []
   ]
 
-  constructor(private router: Router) {
+   constructor(private router: Router, public authService: AuthService) {
+  }
+
+  doGoogleLogin(){
+    this.user = this.authService.doGoogleLogin();
+    this.isLogin = false;
   }
 
   ngOnInit(): void {
