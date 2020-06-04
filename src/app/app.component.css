@@ -3,7 +3,7 @@ mat-toolbar-row {
 }
 
 mat-sidenav-container {
-  height: 500px;
+  height: 100%;
 }
 
 mat-sidenav {
