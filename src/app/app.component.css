@@ -47,9 +47,13 @@ mat-selection-list {
 
 
 .example-full-width {
-  min-width: 200px;
+  min-width: 300px;
 }
 
 td {
   padding-right: 8px;
+}
+
+.register-pet-form {
+  padding: 50px;
 }

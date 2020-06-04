@@ -12,13 +12,14 @@ import {MatCardModule} from "@angular/material/card";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {ReactiveFormsModule} from "@angular/forms";
 import {MatInputModule} from "@angular/material/input";
-import { AngularFireModule } from '@angular/fire';
-import { AngularFirestoreModule } from '@angular/fire/firestore';
-import { AngularFireAuthModule } from '@angular/fire/auth';
-import { environment } from '../environments/environment';
+import {AngularFireModule} from '@angular/fire';
+import {AngularFirestoreModule} from '@angular/fire/firestore';
+import {AngularFireAuthModule} from '@angular/fire/auth';
+import {environment} from '../environments/environment';
 import {MatSelectModule} from "@angular/material/select";
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatNativeDateModule} from "@angular/material/core";
+import {MatButtonModule} from "@angular/material/button";
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import {MatNativeDateModule} from "@angular/material/core";
     MatInputModule,
     MatSelectModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatButtonModule
   ],
   providers: [
     MatDatepickerModule,

@@ -26,10 +26,10 @@ export class AppComponent implements OnInit {
     Validators.required
   ]);
 
-   constructor(private router: Router, public authService: AuthService, private formBuilder: FormBuilder) {
+  constructor(private router: Router, public authService: AuthService, private formBuilder: FormBuilder) {
   }
 
-  doGoogleLogin(){
+  doGoogleLogin() {
     this.user = this.authService.doGoogleLogin();
     this.isLogin = false;
   }
@@ -85,6 +85,45 @@ export class AppComponent implements OnInit {
   }
 
   createPet(petData) {
-    console.log(petData);
+    petData.birth = this.parseDate(petData.birth);
+    console.log(petData)
+  }
+
+  parseDate(birth: any): string {
+    let dateParts = birth.toString().split(' ');
+    let day = dateParts[2];
+    let month = AppComponent.getMonth(dateParts[1]);
+    let year = dateParts[3];
+
+    return year + '-' + month + '-' + day + 'T00:00:00';
+  }
+
+  private static getMonth(month: string): string {
+    switch (month) {
+      case 'Jan':
+        return "01";
+      case 'Feb':
+        return "02";
+      case 'Mar':
+        return "03";
+      case 'Apr':
+        return "04";
+      case 'May':
+        return "05";
+      case 'Jun':
+        return "06";
+      case 'Jul':
+        return "07";
+      case 'Aug':
+        return "08";
+      case 'Sep':
+        return "09";
+      case 'Oct':
+        return "10";
+      case 'Nov':
+        return "11";
+    }
+
+    return "12";
   }
 }

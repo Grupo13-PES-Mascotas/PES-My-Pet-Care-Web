@@ -52,7 +52,7 @@
           </mat-grid-list>
         </ng-template>
         <ng-template #registerPet>
-          <div>
+          <div class="register-pet-form">
             <form [formGroup]="registerPetForm" (ngSubmit)="createPet(registerPetForm.value)">
               <p>
                 <mat-form-field class="example-full-width">
@@ -77,7 +77,7 @@
                 </mat-form-field>
               </p>
               <p>
-                <mat-form-field>
+                <mat-form-field class="example-full-width">
                   <mat-label>Birth date</mat-label>
                   <input matInput [matDatepicker]="picker" id="birth" type="text" formControlName="birth">
                   <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
