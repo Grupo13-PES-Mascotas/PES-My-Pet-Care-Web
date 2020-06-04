@@ -20,7 +20,12 @@
     </ng-template>
     <ng-template #navigation [ngSwitch]="selectedNavigation">
       <div *ngSwitchCase="0">
-        My Pets
+        <mat-grid-list cols="3" rowHeight="3:1">
+          <mat-grid-tile *ngFor="let pet of user.pets">
+
+          </mat-grid-tile>
+        </mat-grid-list>
+
       </div>
       <div *ngSwitchDefault>
         Not implemented yet
