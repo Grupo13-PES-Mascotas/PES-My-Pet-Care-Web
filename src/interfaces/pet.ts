@@ -1,6 +1,7 @@
 export interface Pet {
   owner?: string;
   name?: string;
+  image?: string;
   body: {
     gender: string;
     breed: string;
