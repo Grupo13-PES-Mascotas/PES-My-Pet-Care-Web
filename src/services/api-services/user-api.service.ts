@@ -31,7 +31,7 @@ export class UserApiService {
       );
   }
 
-  getUserOld(username: string): Observable<User> {
+  getUserOld(username: string): Observable<any> {
     return this.http.get<User>(`${this.url}/${username}`, {
       headers: this.headers,
       observe: 'body',

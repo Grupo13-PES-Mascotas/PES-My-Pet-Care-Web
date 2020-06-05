@@ -24,6 +24,7 @@
               "src/assets"
             ],
             "styles": [
+              "src/custom-theme.scss",
               "src/styles.css"
             ],
             "scripts": []
@@ -119,6 +120,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "PES-My-Pet-Care-Web"
+    }
+  },
+  "defaultProject": "PES-My-Pet-Care-Web",
+  "cli": {
+    "analytics": "36887292-d95a-4a74-a2b9-e2930906ed57"
+  }
 }
