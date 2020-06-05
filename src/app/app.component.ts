@@ -58,13 +58,13 @@ export class AppComponent implements OnInit {
         this.user = user;
         this.petApiService.getAllPetsOld(res.user.displayName).subscribe(pets => {
           this.user.pets = pets;
-          pets.forEach( function(pet) {
+          this.isLogin = false;
+          this.arePetsObtained = true;
+          for (const pet of pets ) {
             this.petApiService.getPetImage(res.user.displayName, pet.name).subscribe(img => {
               pet.image = img;
             });
-          });
-          this.isLogin = false;
-          this.arePetsObtained = true;
+          };
         });
       });
     });
