@@ -31,6 +31,17 @@ export class PetApiService {
       );
   }
 
+  getPetImage(username: string, petName: string): Observable<string>{
+    return this.http.get(`https://pes-my-pet-care-develop.herokuapp.com/storage/image/${username}/pets/${petName}-profile-image.png`, {
+      headers: this.headers,
+      observe: 'body',
+      responseType: 'text'
+    })
+      .pipe(
+        catchError(this.handleError<any>('getPetImage'))
+      );
+  }
+
   getPetOld(username: string, petName: string): Observable<Pet> {
     return this.http.get<Pet>(`${this.url}/${username}/${petName}`, {
       headers: this.headers,

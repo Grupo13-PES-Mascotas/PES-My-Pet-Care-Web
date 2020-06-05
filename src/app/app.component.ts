@@ -25,6 +25,7 @@ export class AppComponent implements OnInit {
   selectedCustomOptionNavigation: number = 0;
   arePetsObtained: boolean = false;
   registerPetForm;
+  img: string = '';
   navigationOptions = [
     'My Pets', 'Pet\'s Community', 'My Walks', 'Near Establishments', 'Calendar', 'Achievements', 'Settings'
   ];
@@ -57,6 +58,11 @@ export class AppComponent implements OnInit {
         this.user = user;
         this.petApiService.getAllPetsOld(res.user.displayName).subscribe(pets => {
           this.user.pets = pets;
+          pets.forEach( function(pet) {
+            this.petApiService.getPetImage(res.user.displayName, pet.name).subscribe(img => {
+              pet.image = img;
+            });
+          });
           this.isLogin = false;
           this.arePetsObtained = true;
         });
@@ -87,31 +93,6 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // this.userApiService.getUserOld('Enric Hernando');
-    // this.user = this.userApiService.getUserData();
-    // this.petApiService.getAllPetsOld(this.user.username).subscribe(pets => this.user.pets = pets);
-    /*this.user = {
-      uid: '1234', username: 'Raimon', email: 'raimon@gmail.com',
-      pets: [
-        {
-          owner: 'Raimon', name: 'Lucas', gender: 'Male', breed: 'Leche',
-          birth: '2020-06-01T00:00:00', pathologies: 'none'
-        },
-        {
-          owner: 'Raimon', name: 'Lucas', gender: 'Male', breed: 'Leche',
-          birth: '2020-06-01T00:00:00', pathologies: 'none'
-        },
-        {
-          owner: 'Raimon', name: 'Lucas', gender: 'Male', breed: 'Leche',
-          birth: '2020-06-01T00:00:00', pathologies: 'none'
-        },
-        {
-          owner: 'Raimon', name: 'Lucas', gender: 'Male', breed: 'Leche',
-          birth: '2020-06-01T00:00:00', pathologies: 'none'
-        }
-      ]
-    };*/
-
     this.registerPetForm = this.formBuilder.group({
       name: '',
       gender: '',
