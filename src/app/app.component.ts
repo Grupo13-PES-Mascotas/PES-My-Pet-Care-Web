@@ -12,9 +12,10 @@ import {AuthService} from "./auth.service";
 export class AppComponent implements OnInit {
   title = 'My Pet Care';
   user: User;
-  isLogin: boolean = false;
+  isLogin: boolean = true;
   selectedNavigation: number = 0;
   selectedCustomOptionNavigation: number = 0;
+  arePetsObtained: boolean = false;
   registerPetForm;
   navigationOptions = [
     'My Pets', 'Pet\'s Community', 'My Walks', 'Near Establishments', 'Calendar', 'Achievements', 'Settings'
@@ -26,7 +27,11 @@ export class AppComponent implements OnInit {
     Validators.required
   ]);
 
-  constructor(private router: Router, public authService: AuthService, private formBuilder: FormBuilder) {
+  constructor(
+    private router: Router,
+    public authService: AuthService,
+    private formBuilder: FormBuilder
+  ) {
   }
 
   doGoogleLogin() {
@@ -35,7 +40,7 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.user = {
+    /*this.user = {
       uid: '1234', username: 'Raimon', email: 'raimon@gmail.com',
       pets: [
         {
@@ -55,7 +60,7 @@ export class AppComponent implements OnInit {
           birth: '2020-06-01T00:00:00', pathologies: 'none'
         }
       ]
-    };
+    };*/
 
     this.registerPetForm = this.formBuilder.group({
       name: '',
@@ -96,6 +101,10 @@ export class AppComponent implements OnInit {
     let year = dateParts[3];
 
     return year + '-' + month + '-' + day + 'T00:00:00';
+  }
+
+  getPets() {
+    console.log("Getting pets from user " + (this.user === undefined ? "undefined" : this.user.username));
   }
 
   private static getMonth(month: string): string {

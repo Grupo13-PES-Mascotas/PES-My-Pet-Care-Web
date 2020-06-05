@@ -4,6 +4,10 @@
   </mat-toolbar-row>
 </mat-toolbar>
 
+<ng-template *ngIf="!arePetsObtained && user !== undefined">
+  {{ getPets() }}
+</ng-template>
+
 <mat-sidenav-container>
   <mat-sidenav class="side" mode="side" opened [fixedInViewport]="false" [fixedTopGap]="0" [fixedBottomGap]="0">
     <mat-selection-list class="side" [multiple]="false">
@@ -33,23 +37,25 @@
     </ng-template>
     <ng-template #navigation [ngSwitch]="selectedNavigation">
       <div *ngSwitchCase="0">
-        <ng-template [ngIf]="selectedCustomOptionNavigation === 0" [ngIfElse]="registerPet">
-          <mat-grid-list cols="3" rowHeight="3:1">
-            <mat-grid-tile *ngFor="let pet of user.pets" [colspan]="1" [rowspan]="2">
-              <mat-card class="pet-card">
-                <mat-card-header>
-                  <div mat-card-avatar class="example-header-image"></div>
-                  <mat-card-title>{{ pet.name }}</mat-card-title>
-                  <mat-card-subtitle>{{ pet.breed }}</mat-card-subtitle>
-                </mat-card-header>
-                <mat-card-content>
-                  <p><span class="pet-field">Gender:</span> {{ pet.gender }}</p>
-                  <p><span class="pet-field">Birth date:</span> {{ getDate(pet.birth) }}</p>
-                  <p><span class="pet-field">Pathologies:</span> {{ pet.pathologies }}</p>
-                </mat-card-content>
-              </mat-card>
-            </mat-grid-tile>
-          </mat-grid-list>
+        <ng-template *ngIf="arePetsObtained">
+          <ng-template [ngIf]="selectedCustomOptionNavigation === 0" [ngIfElse]="registerPet">
+            <mat-grid-list cols="3" rowHeight="3:1">
+              <mat-grid-tile *ngFor="let pet of user.pets" [colspan]="1" [rowspan]="2">
+                <mat-card class="pet-card">
+                  <mat-card-header>
+                    <div mat-card-avatar class="example-header-image"></div>
+                    <mat-card-title>{{ pet.name }}</mat-card-title>
+                    <mat-card-subtitle>{{ pet.breed }}</mat-card-subtitle>
+                  </mat-card-header>
+                  <mat-card-content>
+                    <p><span class="pet-field">Gender:</span> {{ pet.gender }}</p>
+                    <p><span class="pet-field">Birth date:</span> {{ getDate(pet.birth) }}</p>
+                    <p><span class="pet-field">Pathologies:</span> {{ pet.pathologies }}</p>
+                  </mat-card-content>
+                </mat-card>
+              </mat-grid-tile>
+            </mat-grid-list>
+          </ng-template>
         </ng-template>
         <ng-template #registerPet>
           <div class="register-pet-form">
