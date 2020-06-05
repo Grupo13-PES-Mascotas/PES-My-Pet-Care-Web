@@ -8,6 +8,9 @@ import {UserApiService} from "../services/api-services/user-api.service";
 import * as firebase from "firebase";
 import {AngularFireAuth} from "@angular/fire/auth";
 import {TokenManagerService} from "../services/token-manager.service";
+import {Pet} from "../interfaces/pet";
+import {MatDialog} from "@angular/material/dialog";
+import {DialogPetComponent} from "./dialog/dialog.component";
 
 @Component({
   selector: 'app-root',
@@ -40,6 +43,7 @@ export class AppComponent implements OnInit {
     private tokenManagerService: TokenManagerService,
     private userApiService: UserApiService,
     private petApiService: PetApiService,
+    public dialog: MatDialog,
   ) {
   }
 
@@ -51,12 +55,33 @@ export class AppComponent implements OnInit {
       this.tokenManagerService.token = res.user.refreshToken;
       this.userApiService.getUserOld(res.user.uid).subscribe(user => {
         this.user = user;
-        console.log(this.user);
         this.petApiService.getAllPetsOld(res.user.displayName).subscribe(pets => {
           this.user.pets = pets;
           this.isLogin = false;
           this.arePetsObtained = true;
         });
+      });
+    });
+  }
+
+  doLogOut() {
+    this.afAuth.signOut().then(() => {
+      this.user = null;
+      this.isLogin = true;
+      this.arePetsObtained = false;
+    });
+  }
+
+  info(pet: Pet) {
+    pet.owner = this.user.username;
+    const dialog = this.dialog.open(DialogPetComponent, {
+      data: pet
+    });
+    dialog.afterClosed().subscribe(() => {
+      this.petApiService.getAllPetsOld(this.user.username).subscribe(pets => {
+          this.user.pets = pets;
+          this.isLogin = false;
+          this.arePetsObtained = true;
       });
     });
   }
@@ -116,7 +141,11 @@ export class AppComponent implements OnInit {
 
   createPet(petData) {
     petData.birth = this.parseDate(petData.birth);
-    console.log(petData);
+    petData.user = this.user;
+    this.petApiService.createPetOld(this.user.username, petData.name, petData).subscribe(pet =>
+      this.petApiService.getAllPetsOld(this.user.username).subscribe(pets => { this.user.pets = pets; })
+    );
+    this.registerPetForm.reset();
   }
 
   parseDate(birth: any): string {

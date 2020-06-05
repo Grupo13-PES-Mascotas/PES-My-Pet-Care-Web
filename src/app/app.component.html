@@ -28,8 +28,8 @@
 
   <mat-sidenav-content>
     <ng-template [ngIf]="isLogin" [ngIfElse]="navigation">
-      <div class="formGroup">
-        <button type="button" class="btn googleBtn" (click)="doGoogleLogin()">
+      <div class="formGroup" style="text-align: center; padding-top: 200px">
+        <button mat-raised-button color="accent" (click)="doGoogleLogin()">
           <i class="fab fa-google-plus-g"></i>
           Log in with Google
         </button>
@@ -41,7 +41,7 @@
           <ng-template [ngIf]="selectedCustomOptionNavigation === 0" [ngIfElse]="registerPet">
             <mat-grid-list cols="3" rowHeight="3:1">
               <mat-grid-tile *ngFor="let pet of user.pets" [colspan]="1" [rowspan]="2">
-                <mat-card class="pet-card">
+                <mat-card class="pet-card" (click)="info(pet)">
                   <mat-card-header>
                     <div mat-card-avatar class="example-header-image"></div>
                     <mat-card-title>{{ pet.name }}</mat-card-title>
@@ -112,6 +112,14 @@
             </form>
           </div>
         </ng-template>
+      </div>
+      <div *ngSwitchCase="6">
+        <div class="formGroup" style="text-align: center; padding-top: 200px">
+          <button mat-raised-button color="warn" (click)="doLogOut()">
+            <i class="fab fa-google-plus-g"></i>
+            Log Out
+          </button>
+        </div>
       </div>
       <div *ngSwitchDefault>
         Not implemented yet

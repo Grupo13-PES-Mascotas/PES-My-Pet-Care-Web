@@ -1,0 +1,13 @@
+<h2 mat-dialog-title> {{ data.name }} </h2>
+<div>
+    <div style="display: flex;flex-direction: column; margin:1rem auto; max-width: 600px; padding: 1rem;">
+        <p><span class="pet-field">Breed:</span> {{ data.body.breed }}</p>
+        <p><span class="pet-field">Gender:</span> {{ data.body.gender }}</p>
+        <p><span class="pet-field">Birth date:</span> {{ getDate(data.body.birth) }}</p>
+        <p><span class="pet-field">Pathologies:</span> {{ data.body.pathologies }}</p>
+    </div>
+    <div>
+          <button mat-raised-button mat-dialog-close color="primary" (click)="cancel()">Cancel</button>
+          <button mat-raised-button color="warn" style="margin-left: 10px" (click)="deletePet(data)">Delete Pet</button>
+    </div>
+</div>

@@ -16,6 +16,9 @@ import {AngularFireModule} from '@angular/fire';
 import {AngularFirestoreModule} from '@angular/fire/firestore';
 import {AngularFireAuthModule} from '@angular/fire/auth';
 import {environment} from '../environments/environment';
+import { MatDialogModule } from '@angular/material/dialog';
+import { FormsModule } from '@angular/forms';
+import { MatTableModule } from '@angular/material/table';
 import {MatSelectModule} from '@angular/material/select';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule} from '@angular/material/core';
@@ -46,7 +49,10 @@ import {HttpClientModule} from '@angular/common/http';
     MatDatepickerModule,
     MatNativeDateModule,
     MatButtonModule,
-    HttpClientModule
+    HttpClientModule,
+    MatDialogModule,
+    FormsModule,
+    MatTableModule,
   ],
   providers: [
     MatDatepickerModule,
