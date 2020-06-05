@@ -1,16 +1,16 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
-import {User} from "../interfaces/user";
-import {FormBuilder, FormControl, Validators} from "@angular/forms";
-import {AuthService} from "./auth.service";
-import {PetApiService} from "../services/api-services/pet-api.service";
-import {UserApiService} from "../services/api-services/user-api.service";
-import * as firebase from "firebase";
-import {AngularFireAuth} from "@angular/fire/auth";
-import {TokenManagerService} from "../services/token-manager.service";
-import {Pet} from "../interfaces/pet";
-import {MatDialog} from "@angular/material/dialog";
-import {DialogPetComponent} from "./dialog/dialog.component";
+import {User} from '../interfaces/user';
+import {FormBuilder, FormControl, Validators} from '@angular/forms';
+import {AuthService} from './auth.service';
+import {PetApiService} from '../services/api-services/pet-api.service';
+import {UserApiService} from '../services/api-services/user-api.service';
+import * as firebase from 'firebase';
+import {AngularFireAuth} from '@angular/fire/auth';
+import {TokenManagerService} from '../services/token-manager.service';
+import {Pet} from '../interfaces/pet';
+import {MatDialog} from '@angular/material/dialog';
+import {DialogPetComponent} from './dialog/dialog.component';
 
 @Component({
   selector: 'app-root',
@@ -30,7 +30,7 @@ export class AppComponent implements OnInit {
   ];
   navigationCustomOptions = [
     ['Register new pet'], [], [], [], [], [], []
-  ]
+  ];
   registerPetControl = new FormControl('', [
     Validators.required
   ]);
@@ -79,9 +79,9 @@ export class AppComponent implements OnInit {
     });
     dialog.afterClosed().subscribe(() => {
       this.petApiService.getAllPetsOld(this.user.username).subscribe(pets => {
-          this.user.pets = pets;
-          this.isLogin = false;
-          this.arePetsObtained = true;
+        this.user.pets = pets;
+        this.isLogin = false;
+        this.arePetsObtained = true;
       });
     });
   }
@@ -142,10 +142,13 @@ export class AppComponent implements OnInit {
   createPet(petData) {
     petData.birth = this.parseDate(petData.birth);
     petData.user = this.user;
-    this.petApiService.createPetOld(this.user.username, petData.name, petData).subscribe(pet =>
-      this.petApiService.getAllPetsOld(this.user.username).subscribe(pets => { this.user.pets = pets; })
+    this.petApiService.createPetOld(this.user.username, petData.name, petData).subscribe(() =>
+      this.petApiService.getAllPetsOld(this.user.username).subscribe(pets => {
+        this.user.pets = pets;
+        this.selectNavigationOption(0);
+        this.registerPetForm.reset();
+      })
     );
-    this.registerPetForm.reset();
   }
 
   parseDate(birth: any): string {
@@ -158,35 +161,35 @@ export class AppComponent implements OnInit {
   }
 
   getPets() {
-    console.log("Getting pets from user " + (this.user === undefined ? "undefined" : this.user.username));
+    console.log('Getting pets from user ' + (this.user === undefined ? 'undefined' : this.user.username));
   }
 
   private static getMonth(month: string): string {
     switch (month) {
       case 'Jan':
-        return "01";
+        return '01';
       case 'Feb':
-        return "02";
+        return '02';
       case 'Mar':
-        return "03";
+        return '03';
       case 'Apr':
-        return "04";
+        return '04';
       case 'May':
-        return "05";
+        return '05';
       case 'Jun':
-        return "06";
+        return '06';
       case 'Jul':
-        return "07";
+        return '07';
       case 'Aug':
-        return "08";
+        return '08';
       case 'Sep':
-        return "09";
+        return '09';
       case 'Oct':
-        return "10";
+        return '10';
       case 'Nov':
-        return "11";
+        return '11';
     }
 
-    return "12";
+    return '12';
   }
 }
