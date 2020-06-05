@@ -3,6 +3,8 @@ import {User} from '../interfaces/user';
 import {AngularFireAuth} from '@angular/fire/auth';
 import * as firebase from 'firebase';
 import {TokenManagerService} from "../services/token-manager.service";
+import {PetApiService} from "../services/api-services/pet-api.service";
+import {UserApiService} from "../services/api-services/user-api.service";
 
 
 @Injectable({
@@ -10,11 +12,13 @@ import {TokenManagerService} from "../services/token-manager.service";
 })
 
 export class AuthService {
-  user: User;
+  private user: User;
 
   constructor(
     public afAuth: AngularFireAuth, // Inject Firebase auth service
     private tokenManagerService: TokenManagerService,
+    private userApiService: UserApiService,
+    private petApiService: PetApiService,
   ) { }
 
   doGoogleLogin(): User{
@@ -22,15 +26,14 @@ export class AuthService {
     provider.addScope('profile');
     provider.addScope('email');
     this.afAuth.signInWithPopup(provider).then(res => {
-      this.user = {
-        uid: res.user.uid,
-        username: res.user.displayName,
-        email: res.user.email,
-      };
-
       this.tokenManagerService.token = res.user.refreshToken;
+      this.userApiService.getUserOld(res.user.uid).subscribe(user => {
+        this.user = user;
+        console.log(this.user);
+        this.petApiService.getAllPetsOld('Enric Hernando').subscribe(pets => this.user.pets = pets);
+      });
     });
     return this.user;
-}
+  }
 
 }

@@ -37,7 +37,7 @@
     </ng-template>
     <ng-template #navigation [ngSwitch]="selectedNavigation">
       <div *ngSwitchCase="0">
-        <ng-template *ngIf="arePetsObtained">
+        <ng-template [ngIf]="arePetsObtained">
           <ng-template [ngIf]="selectedCustomOptionNavigation === 0" [ngIfElse]="registerPet">
             <mat-grid-list cols="3" rowHeight="3:1">
               <mat-grid-tile *ngFor="let pet of user.pets" [colspan]="1" [rowspan]="2">

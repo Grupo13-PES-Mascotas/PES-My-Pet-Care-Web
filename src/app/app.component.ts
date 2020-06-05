@@ -3,6 +3,11 @@ import {Router} from '@angular/router';
 import {User} from "../interfaces/user";
 import {FormBuilder, FormControl, Validators} from "@angular/forms";
 import {AuthService} from "./auth.service";
+import {PetApiService} from "../services/api-services/pet-api.service";
+import {UserApiService} from "../services/api-services/user-api.service";
+import * as firebase from "firebase";
+import {AngularFireAuth} from "@angular/fire/auth";
+import {TokenManagerService} from "../services/token-manager.service";
 
 @Component({
   selector: 'app-root',
@@ -30,16 +35,36 @@ export class AppComponent implements OnInit {
   constructor(
     private router: Router,
     public authService: AuthService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    public afAuth: AngularFireAuth, // Inject Firebase auth service
+    private tokenManagerService: TokenManagerService,
+    private userApiService: UserApiService,
+    private petApiService: PetApiService,
   ) {
   }
 
   doGoogleLogin() {
-    this.user = this.authService.doGoogleLogin();
-    this.isLogin = false;
+    const provider = new firebase.auth.GoogleAuthProvider();
+    provider.addScope('profile');
+    provider.addScope('email');
+    this.afAuth.signInWithPopup(provider).then(res => {
+      this.tokenManagerService.token = res.user.refreshToken;
+      this.userApiService.getUserOld(res.user.uid).subscribe(user => {
+        this.user = user;
+        console.log(this.user);
+        this.petApiService.getAllPetsOld(res.user.displayName).subscribe(pets => {
+          this.user.pets = pets;
+          this.isLogin = false;
+          this.arePetsObtained = true;
+        });
+      });
+    });
   }
 
   ngOnInit(): void {
+    // this.userApiService.getUserOld('Enric Hernando');
+    // this.user = this.userApiService.getUserData();
+    // this.petApiService.getAllPetsOld(this.user.username).subscribe(pets => this.user.pets = pets);
     /*this.user = {
       uid: '1234', username: 'Raimon', email: 'raimon@gmail.com',
       pets: [
@@ -73,11 +98,7 @@ export class AppComponent implements OnInit {
   }
 
   getDate(dateTime: string): string {
-    let index = dateTime.indexOf('T');
-    let date = dateTime.substring(0, index);
-    let dateParts = date.split('-');
-
-    return dateParts[2] + '-' + dateParts[1] + '-' + dateParts[0];
+    return dateTime;
   }
 
   selectNavigationOption(actual: number): void {
@@ -91,7 +112,7 @@ export class AppComponent implements OnInit {
 
   createPet(petData) {
     petData.birth = this.parseDate(petData.birth);
-    console.log(petData)
+    console.log(petData);
   }
 
   parseDate(birth: any): string {

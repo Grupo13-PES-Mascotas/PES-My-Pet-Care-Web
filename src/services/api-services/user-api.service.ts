@@ -9,7 +9,7 @@ import {catchError} from 'rxjs/operators';
   providedIn: 'root'
 })
 export class UserApiService {
-  private url = 'https://pes-my-pet-care-develop.herokuapp.com/users';
+  private url = 'https://image-branch-testing.herokuapp.com/users';
   private headers;
 
   constructor(
@@ -31,7 +31,7 @@ export class UserApiService {
       );
   }
 
-  getUserOld(username: string): Observable<User> {
+  getUserOld(username: string): Observable<any> {
     return this.http.get<User>(`${this.url}/${username}`, {
       headers: this.headers,
       observe: 'body',

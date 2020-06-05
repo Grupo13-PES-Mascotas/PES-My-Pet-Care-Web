@@ -9,7 +9,7 @@ import {Pet} from '../../interfaces/pet';
   providedIn: 'root'
 })
 export class PetApiService {
-  private url = 'https://pes-my-pet-care-develop.herokuapp.com/pet';
+  private url = 'https://image-branch-testing.herokuapp.com/pet';
   private headers;
 
   constructor(
