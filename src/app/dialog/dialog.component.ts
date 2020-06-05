@@ -25,15 +25,15 @@ export class DialogPetComponent implements OnInit {
 
   deletePet(pet: Pet) {
     this.petApiService.deletePetOld(pet.owner, pet.name).subscribe(() =>
-      console.log(this.petApiService.getAllPetsOld(pet.owner))
+      console.log(`Delete ${pet.name} of ${pet.owner}`)
     );
     this.dialogRef.close();
   }
 
   getDate(dateTime: string): string {
-    let index = dateTime.indexOf('T');
-    let date = dateTime.substring(0, index);
-    let dateParts = date.split('-');
+    const index = dateTime.indexOf('T');
+    const date = dateTime.substring(0, index);
+    const dateParts = date.split('-');
 
     return dateParts[2] + '-' + dateParts[1] + '-' + dateParts[0];
   }
