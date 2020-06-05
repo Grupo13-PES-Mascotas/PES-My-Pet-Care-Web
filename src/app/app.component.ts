@@ -98,7 +98,11 @@ export class AppComponent implements OnInit {
   }
 
   getDate(dateTime: string): string {
-    return dateTime;
+    let index = dateTime.indexOf('T');
+    let date = dateTime.substring(0, index);
+    let dateParts = date.split('-');
+
+    return dateParts[2] + '-' + dateParts[1] + '-' + dateParts[0];
   }
 
   selectNavigationOption(actual: number): void {
