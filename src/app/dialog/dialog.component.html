@@ -5,8 +5,6 @@
       <p><span class="pet-field">Gender:</span> {{ data.body.gender }}</p>
       <p><span class="pet-field">Birth date:</span> {{ getDate(data.body.birth) }}</p>
       <p><span class="pet-field">Pathologies:</span> {{ data.body.pathologies }}</p>
-      <p><span class="pet-field">Needs:</span> {{ data.body.needs }}</p>
-      <p><span class="pet-field">Recommended Kcal:</span> {{ data.body.recommendedKcal }}</p>
     </div>
     <div>
       <button mat-raised-button mat-dialog-close color="primary" (click)="cancel()">Cancel</button>
