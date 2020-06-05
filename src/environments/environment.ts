@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  firebase: {
+  firebaseConfig: {
     apiKey: 'AIzaSyC8YkS1MlpFKRX7UEg-lbnozxBo_la3YCk',
     authDomain: 'my-pet-care-production.firebaseapp.com',
     databaseURL: 'https://my-pet-care-production.firebaseio.com',
