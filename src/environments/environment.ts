@@ -5,12 +5,12 @@
 export const environment = {
   production: false,
   firebaseConfig: {
-    apiKey: 'AIzaSyAm7xJ6TMTi-V04u__QPMP8Kj28pCbf-Ds',
-    authDomain: 'my-pet-care-85883.firebaseapp.com',
-    databaseURL: 'https://my-pet-care-85883.firebaseio.com',
-    projectId: 'my-pet-care-85883',
-    storageBucket: 'my-pet-care-85883.appspot.com',
-    messagingSenderId: '117839667395'
+    apiKey: 'AIzaSyC8YkS1MlpFKRX7UEg-lbnozxBo_la3YCk',
+    authDomain: 'my-pet-care-production.firebaseapp.com',
+    databaseURL: 'https://my-pet-care-production.firebaseio.com',
+    projectId: 'my-pet-care-production',
+    storageBucket: 'my-pet-care-production.appspot.com',
+    messagingSenderId: '719320451385'
   },
 };
 
