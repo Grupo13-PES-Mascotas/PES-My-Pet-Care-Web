@@ -82,16 +82,16 @@ export class AppComponent implements OnInit {
     provider.addScope('email');
     this.afAuth.signInWithPopup(provider).then(res => {
       this.tokenManagerService.token = res.user.refreshToken;
-      this.userApiService.getUserOld(res.user.uid).subscribe(user => {
+      this.userApiService.getUserOld('RbA0O88eS0eSdAOuXmk5PScbgKj2').subscribe(user => {
         this.user = user;
-        this.petApiService.getAllPetsOld(res.user.displayName).subscribe(pets => {
+        this.petApiService.getAllPetsOld('Albert Pinto Gil').subscribe(pets => {
           this.user.pets = pets;
           this.isLogin = false;
           this.cookieService.set('isLogin', '0');
           this.arePetsObtained = true;
           for (const pet of pets ) {
             if (pet.body.profileImageLocation != null) {
-              this.petApiService.getPetImage(res.user.displayName, pet.name).subscribe(img => {
+              this.petApiService.getPetImage('Albert Pinto Gil', pet.name).subscribe(img => {
                 pet.image = img;
               });
             }
@@ -144,7 +144,6 @@ export class AppComponent implements OnInit {
       pathologies: ''
     });
     const login = this.cookieService.get('isLogin');
-    console.log('Login', login);
     if (login === '') {
       this.isLogin = true;
       this.cookieService.set('isLogin', '1');
