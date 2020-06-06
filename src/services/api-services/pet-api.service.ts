@@ -10,6 +10,7 @@ import {Pet} from '../../interfaces/pet';
 })
 export class PetApiService {
   private url = 'https://pes-my-pet-care.herokuapp.com/pet';
+  private storageUrl = 'https://pes-my-pet-care.herokuapp.com/storage';
   private headers;
 
   constructor(
@@ -32,7 +33,7 @@ export class PetApiService {
   }
 
   getPetImage(username: string, petName: string): Observable<string>{
-    return this.http.get(`https://pes-my-pet-care-develop.herokuapp.com/storage/image/${username}/pets/${petName}-profile-image.png`, {
+    return this.http.get(`${this.storageUrl}/image/${username}/pets/${petName}-profile-image.png`, {
       headers: this.headers,
       observe: 'body',
       responseType: 'text'

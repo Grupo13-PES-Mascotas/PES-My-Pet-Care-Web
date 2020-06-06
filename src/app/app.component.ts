@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {User} from '../interfaces/user';
 import {FormBuilder, FormControl, Validators} from '@angular/forms';
-import {AuthService} from './auth.service';
 import {PetApiService} from '../services/api-services/pet-api.service';
 import {UserApiService} from '../services/api-services/user-api.service';
 import * as firebase from 'firebase';
@@ -11,6 +10,7 @@ import {TokenManagerService} from '../services/token-manager.service';
 import {Pet} from '../interfaces/pet';
 import {MatDialog} from '@angular/material/dialog';
 import {DialogPetComponent} from './dialog/dialog.component';
+import {CookieService} from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-root',
@@ -21,23 +21,22 @@ export class AppComponent implements OnInit {
 
   constructor(
     private router: Router,
-    public authService: AuthService,
     private formBuilder: FormBuilder,
     public afAuth: AngularFireAuth, // Inject Firebase auth service
     private tokenManagerService: TokenManagerService,
     private userApiService: UserApiService,
     private petApiService: PetApiService,
+    private cookieService: CookieService,
     public dialog: MatDialog,
   ) {
   }
   title = 'My Pet Care';
   user: User;
-  isLogin = true;
+  isLogin;
   selectedNavigation = 0;
   selectedCustomOptionNavigation = 0;
   arePetsObtained = false;
   registerPetForm;
-  img = '';
   navigationOptions = [
     'My Pets', 'Pet\'s Community', 'My Walks', 'Near Establishments', 'Calendar', 'Achievements', 'Settings'
   ];
@@ -88,11 +87,15 @@ export class AppComponent implements OnInit {
         this.petApiService.getAllPetsOld(res.user.displayName).subscribe(pets => {
           this.user.pets = pets;
           this.isLogin = false;
+          this.cookieService.set('user', JSON.stringify(this.user));
+          this.cookieService.set('isLogin', '0');
           this.arePetsObtained = true;
           for (const pet of pets ) {
-            this.petApiService.getPetImage(res.user.displayName, pet.name).subscribe(img => {
-              pet.image = img;
-            });
+            if (pet.body.profileImageLocation != null) {
+              this.petApiService.getPetImage(res.user.displayName, pet.name).subscribe(img => {
+                pet.image = img;
+              });
+            }
           }
         });
       });
@@ -103,11 +106,14 @@ export class AppComponent implements OnInit {
     this.afAuth.signOut().then(() => {
       this.user = null;
       this.isLogin = true;
+      this.cookieService.delete('user');
+      this.cookieService.delete('isLogin');
       this.arePetsObtained = false;
     });
   }
 
   info(pet: Pet) {
+    // this.user = JSON.parse(this.cookieService.get('user'));
     pet.owner = this.user.username;
     const dialog = this.dialog.open(DialogPetComponent, {
       data: pet
@@ -115,12 +121,15 @@ export class AppComponent implements OnInit {
     dialog.afterClosed().subscribe(() => {
       this.petApiService.getAllPetsOld(this.user.username).subscribe(pets => {
         this.user.pets = pets;
-        this.isLogin = false;
         this.arePetsObtained = true;
+        this.isLogin = (this.cookieService.get('isLogin') === '1');
+        this.cookieService.set('user', JSON.stringify(this.user));
         for (const peta of pets ) {
-            this.petApiService.getPetImage(this.user.username, peta.name).subscribe(img => {
-              peta.image = img;
+          if (pet.body.profileImageLocation != null) {
+            this.petApiService.getPetImage(this.user.username, pet.name).subscribe(img => {
+              pet.image = img;
             });
+          }
         }
       });
     });
@@ -134,7 +143,28 @@ export class AppComponent implements OnInit {
       birth: '',
       pathologies: ''
     });
-
+    const login = this.cookieService.get('isLogin');
+    if (login === '') {
+      this.isLogin = true;
+      this.cookieService.set('isLogin', '1');
+    } else {
+      this.isLogin = (login === '1');
+    }
+    if (!this.isLogin) {
+      this.user = JSON.parse(this.cookieService.get('user'));
+      this.petApiService.getAllPetsOld(this.user.username).subscribe(pets => {
+        this.user.pets = pets;
+        this.cookieService.set('user', JSON.stringify(this.user));
+        this.arePetsObtained = true;
+        for (const pet of pets ) {
+          if (pet.body.profileImageLocation != null) {
+            this.petApiService.getPetImage(this.user.username, pet.name).subscribe(img => {
+              pet.image = img;
+            });
+          }
+        }
+      });
+    }
   }
 
   getDate(dateTime: string): string {
@@ -160,6 +190,7 @@ export class AppComponent implements OnInit {
     this.petApiService.createPetOld(this.user.username, petData.name, petData).subscribe(() =>
       this.petApiService.getAllPetsOld(this.user.username).subscribe(pets => {
         this.user.pets = pets;
+        this.cookieService.set('user', JSON.stringify(this.user));
         this.selectNavigationOption(0);
         this.registerPetForm.reset();
       })
