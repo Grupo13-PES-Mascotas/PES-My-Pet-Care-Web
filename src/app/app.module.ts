@@ -24,6 +24,7 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule} from '@angular/material/core';
 import {MatButtonModule} from '@angular/material/button';
 import {HttpClientModule} from '@angular/common/http';
+import {CookieService} from 'ngx-cookie-service';
 
 @NgModule({
   declarations: [
@@ -56,6 +57,7 @@ import {HttpClientModule} from '@angular/common/http';
   ],
   providers: [
     MatDatepickerModule,
+    CookieService,
   ],
   bootstrap: [AppComponent]
 })

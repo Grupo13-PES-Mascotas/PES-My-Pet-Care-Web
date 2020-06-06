@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {User} from '../interfaces/user';
 import {FormBuilder, FormControl, Validators} from '@angular/forms';
-import {AuthService} from './auth.service';
 import {PetApiService} from '../services/api-services/pet-api.service';
 import {UserApiService} from '../services/api-services/user-api.service';
 import * as firebase from 'firebase';
@@ -11,6 +10,7 @@ import {TokenManagerService} from '../services/token-manager.service';
 import {Pet} from '../interfaces/pet';
 import {MatDialog} from '@angular/material/dialog';
 import {DialogPetComponent} from './dialog/dialog.component';
+import {CookieService} from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-root',
@@ -21,12 +21,12 @@ export class AppComponent implements OnInit {
 
   constructor(
     private router: Router,
-    public authService: AuthService,
     private formBuilder: FormBuilder,
     public afAuth: AngularFireAuth, // Inject Firebase auth service
     private tokenManagerService: TokenManagerService,
     private userApiService: UserApiService,
     private petApiService: PetApiService,
+    private cookieService: CookieService,
     public dialog: MatDialog,
   ) {
   }
@@ -37,7 +37,6 @@ export class AppComponent implements OnInit {
   selectedCustomOptionNavigation = 0;
   arePetsObtained = false;
   registerPetForm;
-  img = '';
   navigationOptions = [
     'My Pets', 'Pet\'s Community', 'My Walks', 'Near Establishments', 'Calendar', 'Achievements', 'Settings'
   ];
@@ -87,9 +86,8 @@ export class AppComponent implements OnInit {
         this.user = user;
         this.petApiService.getAllPetsOld(res.user.displayName).subscribe(pets => {
           this.user.pets = pets;
-          sessionStorage.setItem('user', JSON.stringify(this.user));
           this.isLogin = false;
-          sessionStorage.setItem('isLogin', '0');
+          this.cookieService.set('isLogin', '0');
           this.arePetsObtained = true;
           for (const pet of pets ) {
             if (pet.body.profileImageLocation != null) {
@@ -98,6 +96,7 @@ export class AppComponent implements OnInit {
               });
             }
           }
+          this.cookieService.set('user', JSON.stringify(this.user));
         });
       });
     });
@@ -107,13 +106,14 @@ export class AppComponent implements OnInit {
     this.afAuth.signOut().then(() => {
       this.user = null;
       this.isLogin = true;
-      sessionStorage.clear();
+      this.cookieService.delete('user');
+      this.cookieService.delete('isLogin');
       this.arePetsObtained = false;
     });
   }
 
   info(pet: Pet) {
-    this.user = JSON.parse(sessionStorage.getItem('user'));
+    // this.user = JSON.parse(this.cookieService.get('user'));
     pet.owner = this.user.username;
     const dialog = this.dialog.open(DialogPetComponent, {
       data: pet
@@ -121,8 +121,7 @@ export class AppComponent implements OnInit {
     dialog.afterClosed().subscribe(() => {
       this.petApiService.getAllPetsOld(this.user.username).subscribe(pets => {
         this.user.pets = pets;
-        sessionStorage.setItem('user', JSON.stringify(this.user));
-        this.isLogin = (sessionStorage.getItem('isLogin') === '1');
+        this.isLogin = (this.cookieService.get('isLogin') === '1');
         this.arePetsObtained = true;
         for (const peta of pets ) {
           if (pet.body.profileImageLocation != null) {
@@ -131,6 +130,7 @@ export class AppComponent implements OnInit {
             });
           }
         }
+        this.cookieService.set('user', JSON.stringify(this.user));
       });
     });
   }
@@ -143,18 +143,18 @@ export class AppComponent implements OnInit {
       birth: '',
       pathologies: ''
     });
-    const login = sessionStorage.getItem('isLogin');
-    if (login === null) {
+    const login = this.cookieService.get('isLogin');
+    console.log('Login', login);
+    if (login === '') {
       this.isLogin = true;
-      sessionStorage.setItem('isLogin', '1');
+      this.cookieService.set('isLogin', '1');
     } else {
       this.isLogin = (login === '1');
     }
     if (!this.isLogin) {
-      this.user = JSON.parse(sessionStorage.getItem('user'));
+      this.user = JSON.parse(this.cookieService.get('user'));
       this.petApiService.getAllPetsOld(this.user.username).subscribe(pets => {
         this.user.pets = pets;
-        sessionStorage.setItem('user', JSON.stringify(this.user));
         this.arePetsObtained = true;
         for (const pet of pets ) {
           if (pet.body.profileImageLocation != null) {
@@ -163,6 +163,7 @@ export class AppComponent implements OnInit {
             });
           }
         }
+        this.cookieService.set('user', JSON.stringify(this.user));
       });
     }
   }
@@ -190,7 +191,7 @@ export class AppComponent implements OnInit {
     this.petApiService.createPetOld(this.user.username, petData.name, petData).subscribe(() =>
       this.petApiService.getAllPetsOld(this.user.username).subscribe(pets => {
         this.user.pets = pets;
-        sessionStorage.setItem('user', JSON.stringify(this.user));
+        this.cookieService.set('user', JSON.stringify(this.user));
         this.selectNavigationOption(0);
         this.registerPetForm.reset();
       })
