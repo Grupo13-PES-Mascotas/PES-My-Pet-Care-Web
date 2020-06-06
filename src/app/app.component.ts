@@ -113,7 +113,6 @@ export class AppComponent implements OnInit {
   }
 
   info(pet: Pet) {
-    // this.user = JSON.parse(this.cookieService.get('user'));
     pet.owner = this.user.username;
     const dialog = this.dialog.open(DialogPetComponent, {
       data: pet
@@ -124,10 +123,10 @@ export class AppComponent implements OnInit {
         this.arePetsObtained = true;
         this.isLogin = (this.cookieService.get('isLogin') === '1');
         this.cookieService.set('user', JSON.stringify(this.user));
-        for (const peta of pets ) {
-          if (pet.body.profileImageLocation != null) {
-            this.petApiService.getPetImage(this.user.username, pet.name).subscribe(img => {
-              pet.image = img;
+        for (const pet1 of pets ) {
+          if (pet1.body.profileImageLocation != null) {
+            this.petApiService.getPetImage(this.user.username, pet1.name).subscribe(img => {
+              pet1.image = img;
             });
           }
         }
