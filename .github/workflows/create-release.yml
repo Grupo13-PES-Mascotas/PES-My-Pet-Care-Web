@@ -1,7 +1,7 @@
 on:
   pull_request:
-    branches: master
     types: closed
+    branches: master
 
 jobs:
   release:
@@ -24,4 +24,3 @@ jobs:
         release_name: My Pet Care Web ${{ env.BRANCH_NAME }}
         draft: false
         prerelease: false
-    

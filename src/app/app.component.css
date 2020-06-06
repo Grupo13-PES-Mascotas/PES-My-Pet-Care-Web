@@ -1,0 +1,59 @@
+mat-toolbar-row {
+  background: #0070C0
+}
+
+mat-sidenav-container {
+  height: 100%;
+}
+
+mat-sidenav {
+  width: 200px;
+  height: 1000px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #0070C0;
+}
+
+mat-selection-list {
+  color: white;
+}
+
+.side {
+  background: #0389c7;
+}
+
+.navText {
+  color: white;
+}
+
+.pet-card {
+  padding-top: 50px;
+  min-width: 75%;
+}
+
+.pet-field {
+  color: #0070C0;
+}
+
+.divisor {
+  stroke: white;
+}
+
+.example-header-image {
+  background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+  background-size: cover;
+}
+
+
+.example-full-width {
+  min-width: 300px;
+}
+
+td {
+  padding-right: 8px;
+}
+
+.register-pet-form {
+  padding: 50px;
+}
