@@ -8,6 +8,7 @@ export interface Pet {
     birth: string;
     pathologies: string;
     needs?: string;
+    profileImageLocation?: string;
     recommendedKcal?: number;
   };
 }

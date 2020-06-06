@@ -24,6 +24,7 @@ export class DialogPetComponent implements OnInit {
   }
 
   deletePet(pet: Pet) {
+    console.log('Pet', pet);
     this.petApiService.deletePetOld(pet.owner, pet.name).subscribe(() =>
       console.log(`Delete ${pet.name} of ${pet.owner}`)
     );
@@ -37,8 +38,4 @@ export class DialogPetComponent implements OnInit {
 
     return dateParts[2] + '-' + dateParts[1] + '-' + dateParts[0];
   }
-
-}
-
-export class DialogComponent {
 }
