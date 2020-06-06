@@ -82,21 +82,21 @@ export class AppComponent implements OnInit {
     provider.addScope('email');
     this.afAuth.signInWithPopup(provider).then(res => {
       this.tokenManagerService.token = res.user.refreshToken;
-      this.userApiService.getUserOld('RbA0O88eS0eSdAOuXmk5PScbgKj2').subscribe(user => {
+      this.userApiService.getUserOld(res.user.uid).subscribe(user => {
         this.user = user;
-        this.petApiService.getAllPetsOld('Albert Pinto Gil').subscribe(pets => {
+        this.petApiService.getAllPetsOld(res.user.displayName).subscribe(pets => {
           this.user.pets = pets;
           this.isLogin = false;
+          this.cookieService.set('user', JSON.stringify(this.user));
           this.cookieService.set('isLogin', '0');
           this.arePetsObtained = true;
           for (const pet of pets ) {
             if (pet.body.profileImageLocation != null) {
-              this.petApiService.getPetImage('Albert Pinto Gil', pet.name).subscribe(img => {
+              this.petApiService.getPetImage(res.user.displayName, pet.name).subscribe(img => {
                 pet.image = img;
               });
             }
           }
-          this.cookieService.set('user', JSON.stringify(this.user));
         });
       });
     });
@@ -121,8 +121,9 @@ export class AppComponent implements OnInit {
     dialog.afterClosed().subscribe(() => {
       this.petApiService.getAllPetsOld(this.user.username).subscribe(pets => {
         this.user.pets = pets;
-        this.isLogin = (this.cookieService.get('isLogin') === '1');
         this.arePetsObtained = true;
+        this.isLogin = (this.cookieService.get('isLogin') === '1');
+        this.cookieService.set('user', JSON.stringify(this.user));
         for (const peta of pets ) {
           if (pet.body.profileImageLocation != null) {
             this.petApiService.getPetImage(this.user.username, pet.name).subscribe(img => {
@@ -130,7 +131,6 @@ export class AppComponent implements OnInit {
             });
           }
         }
-        this.cookieService.set('user', JSON.stringify(this.user));
       });
     });
   }
@@ -154,6 +154,7 @@ export class AppComponent implements OnInit {
       this.user = JSON.parse(this.cookieService.get('user'));
       this.petApiService.getAllPetsOld(this.user.username).subscribe(pets => {
         this.user.pets = pets;
+        this.cookieService.set('user', JSON.stringify(this.user));
         this.arePetsObtained = true;
         for (const pet of pets ) {
           if (pet.body.profileImageLocation != null) {
@@ -162,7 +163,6 @@ export class AppComponent implements OnInit {
             });
           }
         }
-        this.cookieService.set('user', JSON.stringify(this.user));
       });
     }
   }
